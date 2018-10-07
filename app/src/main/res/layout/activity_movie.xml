@@ -182,7 +182,7 @@
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/movieCastContainer" />
+                app:layout_constraintTop_toBottomOf="@+id/movieDetailsOverview" />
 
             <HorizontalScrollView
                 android:id="@+id/movieCastContainer"
@@ -197,7 +197,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/castLabels">
 
                 <LinearLayout
-                    android:id="@+id/movieCast"
+                    android:id="@+id/movieCasts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" />
@@ -216,7 +216,7 @@
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/movieDetailsOverview" />
+                app:layout_constraintTop_toBottomOf="@+id/movieTrailersContainer" />
 
 
             <TextView
@@ -232,7 +232,7 @@
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/movieTrailersContainer" />
+                app:layout_constraintTop_toBottomOf="@+id/movieCastContainer" />
 
             <LinearLayout
                 android:id="@+id/movieReviews"

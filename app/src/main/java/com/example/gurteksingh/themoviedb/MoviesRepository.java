@@ -178,5 +178,31 @@ public class MoviesRepository {
                         callback.onError();
                     }
                 });
+
+    }
+
+    public void getCasts(int movieId, final OnGetCastsCallback callback) {
+        api.getCasts(movieId,TMDB_API_KEY, LANGUAGE)
+                .enqueue(new Callback<CastResponse>() {
+                    @Override
+                    public void onResponse(Call<CastResponse> call, Response<CastResponse> response) {
+                        if (response.isSuccessful()) {
+                            CastResponse castResponse = response.body();
+                            if (castResponse != null && castResponse.getCasts() != null) {
+                                callback.onSuccess(castResponse.getCasts());
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CastResponse> call, Throwable t) {
+                        callback.onError();
+                    }
+                });
+
     }
 }

@@ -36,9 +36,11 @@ public class MovieActivity extends AppCompatActivity {
     private TextView trailersLabel;
     private LinearLayout movieTrailers;
     private LinearLayout movieReviews;
+    private LinearLayout movieCasts;
     private TextView reviewsLabel;
     private MoviesRepository moviesRepository;
     private int movieId;
+    private  TextView castsLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,10 @@ public class MovieActivity extends AppCompatActivity {
         movieRating = findViewById(R.id.movieDetailsRating);
         movieTrailers = findViewById(R.id.movieTrailers);
         movieReviews = findViewById(R.id.movieReviews);
+        movieCasts=findViewById(R.id.movieCasts);
         trailersLabel = findViewById(R.id.trailersLabel);
         reviewsLabel = findViewById(R.id.reviewsLabel);
+        castsLabel =findViewById(R.id.castLabels);
     }
 
     private void getMovie() {
@@ -91,6 +95,7 @@ public class MovieActivity extends AppCompatActivity {
                 getGenres(movie);
                 getTrailers(movie);
                 getReviews(movie);
+                getCasts(movie);
                 movieReleaseDate.setText(movie.getReleaseDate());
                 if (!isFinishing()) {
                     Glide.with(MovieActivity.this)
@@ -146,6 +151,35 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onError() {
                 showError();
+            }
+        });
+    }
+
+    private void getCasts(Movie movie) {
+        moviesRepository.getCasts(movie.getId(), new OnGetCastsCallback() {
+            @Override
+            public void onSuccess(List<Cast> casts) {
+                castsLabel.setVisibility(View.VISIBLE);
+                movieCasts.removeAllViews();
+                for (Cast review : casts) {
+                    View parent = getLayoutInflater().inflate(R.layout.cast, movieCasts, false);
+                    TextView character = parent.findViewById(R.id.charactername);
+                    TextView name = parent.findViewById(R.id.castname);
+                    ImageView cast = parent.findViewById(R.id.castimage);
+                    cast.requestLayout();
+                    Glide.with(MovieActivity.this)
+                            .load(review.getProfilePath())
+                            .apply(RequestOptions.placeholderOf(R.drawable.load).centerCrop())
+                            .into(cast);
+                    character.setText(review.getCharacter());
+                    name.setText(review.getName());
+                    movieCasts.addView(parent);
+                }
+            }
+
+            @Override
+            public void onError() {
+                // Do nothing
             }
         });
     }
